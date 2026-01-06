@@ -8,6 +8,7 @@ function App() {
   const [author, setAuthor] = useState("");
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
+  const [notes, setNotes] = useState([]);
 
   const handleParse = async () => {
     if (!url.trim()) return alert("Please enter a URL");
@@ -17,6 +18,7 @@ function App() {
       setIngredients(data.ingredients || []);
       setSteps(data.steps || []);
       setAuthor(data.author || "");
+      setNotes(data.notes || []);
     } catch (err) {
       alert(err.message);
     } finally {
@@ -77,7 +79,18 @@ function App() {
         </Panel>
 
         <Panel title="Author">
-          <p>{author || <span className="placeholder">Unknown</span>}</p>
+          <p>{author || <span className="placeholder">None</span>}</p>
+        </Panel>
+        <Panel title="Notes">
+          {notes.length ? (
+            <ol>
+              {notes.map((step, i) => (
+                <li key={i}>{step}</li>
+              ))}
+            </ol>
+          ) : (
+            <p className="placeholder">No Notes</p>
+          )}
         </Panel>
       </div>
     </div>
